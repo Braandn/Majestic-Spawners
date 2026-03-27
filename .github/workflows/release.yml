@@ -1,0 +1,71 @@
+name: Release Majestic Spawners
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - paper_version: '1.21.11-R0.1-SNAPSHOT'
+            mc_version: '1.21.11'
+            java_version: '21'
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up JDK ${{ matrix.java_version }}
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ matrix.java_version }}
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Build with Maven
+      run: >
+        mvn clean package
+        -Dpaper.version=${{ matrix.paper_version }}
+        -Dmc.version=${{ matrix.mc_version }}
+        -Djava.version=${{ matrix.java_version }}
+        -Drevision=${GITHUB_REF_NAME#v}
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: jar-${{ matrix.paper_version }}
+        path: target/MajesticSpawners.jar
+        if-no-files-found: error
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Extract changelog for this version
+      id: changelog
+      run: |
+        # Extract everything between the first ## [x.y.z] header and the next one
+        awk '/^## \[/{if(found) exit; found=1; next} found' CHANGELOG.md > release_notes.md
+        cat release_notes.md
+
+    - name: Download all build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        pattern: jar-*
+        path: downloaded-jars
+        merge-multiple: true
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: downloaded-jars/*.jar
+        body_path: release_notes.md

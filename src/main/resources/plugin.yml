@@ -1,0 +1,25 @@
+name: MajesticSpawners
+main: de.braandn.SpawnersPlugin
+version: '1.0.0'
+authors: [braandn]
+api-version: "1.21"
+commands:
+  majesticspawners:
+    description: MajesticSpawners administration commands.
+    usage: "/majesticspawners reload | /majesticspawners give <player> <type> [amount]"
+    aliases: [mspawners]
+    permission: majesticspawners.command
+    permission-message: "&cYou do not have permission to use this command."
+permissions:
+  majesticspawners.command:
+    description: Allows using the MajesticSpawners base command.
+    default: op
+    children:
+      majesticspawners.give: true
+      majesticspawners.reload: true
+  majesticspawners.give:
+    description: Allows giving MajesticSpawners custom spawner items.
+    default: false
+  majesticspawners.reload:
+    description: Allows reloading MajesticSpawners config and drops.
+    default: false

@@ -1,0 +1,220 @@
+spawner:
+  # How often each active spawner is processed (smaller = more frequent updates).
+  processing-interval-ticks: 20
+  # Balancing baseline: average full spawn cycles over time.
+  tick-interval-ticks: 400
+  save-interval-seconds: 60
+  max-items-per-spawner: 15000
+  # Maximum logical stack size for one placed spawner.
+  max-spawner-stack: 500
+  silktouch-needed: true
+  collect-xp: true
+  # normal = full access, view-only = browse only, blocked = cannot open
+  non-owner-access: "normal"
+  # Optional XP overrides per mob type.
+  # Supported formats: number, "min-max", [min, max], or { min: x, max: y }
+  xp-ranges: {}
+
+recipes:
+  type-change:
+    enabled: true
+    allow-base-input: "VANILLA_OR_SINGLE_CUSTOM"
+    main:
+      enabled: true
+      shape:
+        - "XEX"
+        - "NSN"
+        - "XNX"
+      ingredients:
+        X: "AIR"
+        E: "ANY_SPAWN_EGG"
+        N: "NETHER_STAR"
+        S: "SPAWNER_BASE"
+    overrides:
+      wither_skeleton:
+        enabled: true
+        result-type: "WITHER_SKELETON"
+        shape:
+          - "WWW"
+          - "NSN"
+          - "XNX"
+        ingredients:
+          W: "WITHER_SKELETON_SKULL"
+          N: "NETHER_STAR"
+          S: "SPAWNER_BASE"
+          X: "AIR"
+
+spawner-item:
+  name: "&b%type% &7Spawner"
+  lore:
+    - "&7Type: &b%type%"
+    - "&7Amount: &b%amount%"
+
+messages:
+  no-silktouch: "&7You need a Pickaxe with &dSilk Touch &7to mine this spawner!"
+  not-owner: "&cYou are not the owner of this spawner!"
+  collected-xp: "&7Collected &5%amount% &7XP!"
+  spawner-stacked: "&7Stacked! This spawner is now &b%amount%x &b%type%."
+  spawner-taken: "&7Removed &b1x %type% &7Spawner from the stack."
+  spawner-taken-all: "&7Removed &b%amount%x %type% &7spawners as one item."
+  view-only: "&cYou can only view this spawner's storage."
+  wrong-type: "&cYou can only stack spawners of the same type!"
+  commands:
+    help:
+      header: "&cUsage:"
+      reload: "&c/%label% reload"
+      give: "&c/%label% give <player> <type> [amount]"
+    reload:
+      no-permission: "&cYou do not have permission to do that."
+      usage: "&cUsage: /%label% reload"
+      success: "&aMajesticSpawners reloaded successfully."
+      failure: "&cFailed to reload MajesticSpawners. Check console."
+    give:
+      no-permission: "&cYou do not have permission to do that."
+      usage: "&cUsage: /%label% give <player> <type> [amount]"
+      player-offline: "&cThat player must be online."
+      invalid-type: "&cInvalid spawner type: %type%"
+      invalid-amount: "&cAmount must be a whole number."
+      amount-out-of-range: "&cAmount must be between 1 and %max%."
+      sender-success: "&7Gave &b%player% &7a &b%amount%x %type% &7spawner."
+      sender-success-overflow: "&7Gave &b%player% &7a &b%amount%x %type% &7spawner. Inventory was full, so it was dropped at their feet."
+      target-success: "&7You received a &b%amount%x %type% &7spawner."
+      target-overflow: "&cYour inventory was full, so the spawner was dropped at your feet."
+
+main-gui:
+  title: "&b%amount%x &7%type% Spawner"
+  spawner:
+    slot: 11
+    name: "&bꜱᴘᴀᴡɴᴇʀ"
+    lore:
+      - "&7Type: &b%type%"
+      - "&7Amount: &b%amount%"
+      - " "
+      - "&aᴄʟɪᴄᴋ ᴛᴏ ᴍᴀɴᴀɢᴇ"
+  storage:
+    slot: 13
+    name: "&bꜱᴛᴏʀᴀɢᴇ"
+    lore:
+      - "&7Storage: &b%percentage% &7filled."
+      - "%item_list%"
+      - " "
+      - "&aᴄʟɪᴄᴋ ᴛᴏ ᴏᴘᴇɴ"
+    item_list_syntax: "&b%amount%x &7%item%"
+  experience:
+    slot: 15
+    name: "&5ᴄᴏʟʟᴇᴄᴛ Xᴘ"
+    lore:
+      - "&5%amount% &7XP Points"
+      - " "
+      - "&aᴄʟɪᴄᴋ ᴛᴏ ᴄᴏʟʟᴇᴄᴛ"
+
+storage-gui:
+  title: "&b%amount%x &7%type% | %page%/%max_page%"
+  fill_item: "WHITE_STAINED_GLASS_PANE"
+  close:
+    enabled: true
+    slot: 45
+    name: "&4ʙᴀᴄᴋ"
+    lore:
+      - "&cᴄʟɪᴄᴋ ᴛᴏ ʀᴇᴛᴜʀɴ"
+    material: "BARRIER"
+  back:
+    enabled: true
+    show-always: true
+    slot: 48
+    name: "&cʙᴀᴄᴋ"
+    lore: []
+    material: "ARROW"
+  next:
+    enabled: true
+    show-always: true
+    slot: 50
+    name: "&bɴᴇxᴛ"
+    lore: []
+    material: "ARROW"
+  drop:
+    enabled: true
+    slot: 53
+    name: "&aᴅʀᴏᴘ ʟᴏᴏᴛ"
+    lore:
+      - "&7Drops all items out of the Spawner."
+      - " "
+      - "%selected_items%"
+      - "%filter_syntax%"
+      - " "
+      - "&eRight-click to cycle the selected item type."
+      - " "
+      - "&cᴄʟɪᴄᴋ ᴛᴏ ᴅʀᴏᴘ"
+    selected_items_format: "&7Selected Item Types: &b%selected_items%"
+    filter_syntax_current: "&a» &b%selected%"
+    filter_syntax_other: "&7» %other%"
+    material: "DROPPER"
+  collect:
+    enabled: true
+    slot: 49
+    name: "&dᴄᴏʟʟᴇᴄᴛ ᴀʟʟ"
+    lore:
+      - "&7Move all items to your inventory."
+      - " "
+      - "%selected_items%"
+      - "%filter_syntax%"
+      - " "
+      - "&eRight-click to cycle the selected item type."
+      - " "
+      - "&aᴄʟɪᴄᴋ ᴛᴏ ᴄᴏʟʟᴇᴄᴛ"
+    selected_items_format: "&7Selected Item Types: &b%selected_items%"
+    filter_syntax_current: "&a» &b%selected%"
+    filter_syntax_other: "&7» %other%"
+    material: "CHEST"
+confirm-gui:
+  title: "&eAdd Spawner"
+  confirm:
+    enabled: true
+    slot: 11
+    name: "&aᴄᴏɴꜰɪʀᴍ"
+    lore:
+      - "&7Add the spawner in your hand"
+      - "&7to this placed stack."
+    material: "LIME_STAINED_GLASS_PANE"
+  cancel:
+    enabled: true
+    slot: 15
+    name: "&cᴄᴀɴᴄᴇʟ"
+    lore:
+      - "&7Nevermind."
+    material: "RED_STAINED_GLASS_PANE"
+  preview:
+    slot: 13
+    name: "&b+%add_amount%x &7%type%"
+    lore:
+      - "&7Current: &b%amount%"
+      - "&7After confirm: &b%new_amount%"
+      - " "
+      - "&7Right-clicking with stacked"
+      - "&7spawner items uses PDC amount."
+
+stack-gui:
+  title: "&b%type% &7Spawner Stack"
+  back:
+    enabled: true
+    slot: 0
+    name: "&cʙᴀᴄᴋ"
+    lore: []
+    material: "BARRIER"
+  take:
+    slot: 3
+    name: "&cᴛᴀᴋᴇ ꜱᴘᴀᴡɴᴇʀ"
+    lore:
+      - "&7Collect 1 spawner from the stack."
+      - " "
+      - "&aᴄʟɪᴄᴋ ᴛᴏ ᴄᴏʟʟᴇᴄᴛ"
+    material: "SPAWNER"
+  take-all:
+    enabled: true
+    slot: 5
+    name: "&4ᴛᴀᴋᴇ ᴀʟʟ"
+    lore:
+      - "&7Take all spawners as one item."
+      - " "
+      - "&aᴄʟɪᴄᴋ ᴛᴏ ᴄᴏʟʟᴇᴄᴛ"
+    material: "DROPPER"

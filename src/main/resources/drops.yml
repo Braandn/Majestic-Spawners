@@ -1,0 +1,311 @@
+drops:
+  ALLAY: []
+  ARMADILLO: []
+  AXOLOTL: []
+  BAT: []
+  BEE: []
+  BLAZE:
+    - material: BLAZE_ROD
+      amount: "0-1"
+  BOGGED:
+    - material: BONE
+      amount: "0-2"
+    - material: ARROW
+      amount: "0-2"
+  BREEZE:
+    - material: BREEZE_ROD
+      amount: "1-2"
+  CAMEL: []
+  CAT:
+    - material: STRING
+      amount: "0-2"
+  CAVE_SPIDER:
+    - material: STRING
+      amount: "0-2"
+    - material: SPIDER_EYE
+      amount: "0-1"
+      chance: 33
+  CHICKEN:
+    - material: CHICKEN
+      amount: 1
+    - material: FEATHER
+      amount: "0-2"
+  COD:
+    - material: COD
+      amount: 1
+  COW:
+    - material: BEEF
+      amount: "1-3"
+    - material: LEATHER
+      amount: "0-2"
+  CREEPER:
+    - material: GUNPOWDER
+      amount: "0-2"
+  DOLPHIN:
+    - material: COD
+      amount: "0-1"
+  DONKEY:
+    - material: LEATHER
+      amount: "0-2"
+  DROWNED:
+    - material: ROTTEN_FLESH
+      amount: "0-2"
+    - material: COPPER_INGOT
+      amount: 1
+      chance: 11
+  ELDER_GUARDIAN:
+    - material: PRISMARINE_SHARD
+      amount: "0-2"
+    - material: PRISMARINE_CRYSTALS
+      amount: "0-1"
+      chance: 40
+    - material: COD
+      amount: "0-1"
+      chance: 50
+    - material: WET_SPONGE
+      amount: 1
+  ENDERMAN:
+    - material: ENDER_PEARL
+      amount: "0-1"
+      chance: 50
+  ENDERMITE: []
+  ENDER_DRAGON: []
+  EVOKER:
+    - material: TOTEM_OF_UNDYING
+      amount: 1
+    - material: EMERALD
+      amount: "0-1"
+  FOX: []
+  FROG: []
+  GHAST:
+    - material: GUNPOWDER
+      amount: "0-2"
+    - material: GHAST_TEAR
+      amount: "0-1"
+      chance: 50
+  GLOW_SQUID:
+    - material: GLOW_INK_SAC
+      amount: "1-3"
+  GOAT:
+    - material: MUTTON
+      amount: "1-2"
+  GUARDIAN:
+    - material: PRISMARINE_SHARD
+      amount: "0-2"
+    - material: PRISMARINE_CRYSTALS
+      amount: "0-1"
+      chance: 40
+    - material: COD
+      amount: "0-1"
+      chance: 50
+  HOGLIN:
+    - material: PORKCHOP
+      amount: "2-4"
+    - material: LEATHER
+      amount: "0-1"
+  HORSE:
+    - material: LEATHER
+      amount: "0-2"
+  HUSK:
+    - material: ROTTEN_FLESH
+      amount: "0-2"
+    - material: IRON_INGOT
+      amount: 1
+      chance: 2.5
+    - material: CARROT
+      amount: 1
+      chance: 2.5
+    - material: POTATO
+      amount: 1
+      chance: 2.5
+  IRON_GOLEM:
+    - material: IRON_INGOT
+      amount: "3-5"
+    - material: POPPY
+      amount: "0-2"
+  LLAMA:
+    - material: LEATHER
+      amount: "0-2"
+  MAGMA_CUBE:
+    - material: MAGMA_CREAM
+      amount: "0-1"
+  MOOSHROOM:
+    - material: BEEF
+      amount: "1-3"
+    - material: LEATHER
+      amount: "0-2"
+  MULE:
+    - material: LEATHER
+      amount: "0-2"
+  OCELOT:
+    - material: STRING
+      amount: "0-2"
+  PANDA: []
+  PARROT:
+    - material: FEATHER
+      amount: "1-2"
+  PHANTOM:
+    - material: PHANTOM_MEMBRANE
+      amount: "0-1"
+  PIG:
+    - material: PORKCHOP
+      amount: "1-3"
+  PIGLIN:
+    - material: GOLD_NUGGET
+      amount: "2-5"
+  PIGLIN_BRUTE:
+    - material: GOLD_NUGGET
+      amount: "4-8"
+  PILLAGER:
+    - material: ARROW
+      amount: "0-2"
+  POLAR_BEAR:
+    - material: COD
+      amount: "0-2"
+    - material: SALMON
+      amount: "0-2"
+  PUFFERFISH:
+    - material: PUFFERFISH
+      amount: 1
+  RABBIT:
+    - material: RABBIT
+      amount: "0-1"
+    - material: RABBIT_HIDE
+      amount: "0-1"
+    - material: RABBIT_FOOT
+      amount: "0-1"
+      chance: 10
+  RAVAGER:
+    - material: SADDLE
+      amount: 1
+  SALMON:
+    - material: SALMON
+      amount: 1
+  SHEEP:
+    - material: MUTTON
+      amount: "1-2"
+    - material: WHITE_WOOL
+      amount: 1
+  SHULKER:
+    - material: SHULKER_SHELL
+      amount: "0-1"
+      chance: 50
+  SILVERFISH: []
+  SKELETON:
+    - material: BONE
+      amount: "0-2"
+    - material: ARROW
+      amount: "0-2"
+  SKELETON_HORSE:
+    - material: BONE
+      amount: "0-2"
+  SLIME:
+    - material: SLIME_BALL
+      amount: "0-2"
+  SNIFFER: []
+  SNOW_GOLEM:
+    - material: SNOWBALL
+      amount: "0-15"
+  SPIDER:
+    - material: STRING
+      amount: "0-2"
+    - material: SPIDER_EYE
+      amount: "0-1"
+      chance: 33
+  SQUID:
+    - material: INK_SAC
+      amount: "1-3"
+  STRAY:
+    - material: BONE
+      amount: "0-2"
+    - material: ARROW
+      amount: "0-2"
+  TADPOLE: []
+  TRADER_LLAMA:
+    - material: LEATHER
+      amount: "0-2"
+  TROPICAL_FISH:
+    - material: TROPICAL_FISH
+      amount: 1
+  TURTLE:
+    - material: SEAGRASS
+      amount: "0-2"
+  VEX: []
+  VILLAGER: []
+  VINDICATOR:
+    - material: EMERALD
+      amount: "0-1"
+  WANDERING_TRADER: []
+  WARDEN:
+    - material: SCULK_CATALYST
+      amount: 1
+  WITCH:
+    - material: REDSTONE
+      amount: "0-2"
+      chance: 35
+    - material: GLOWSTONE_DUST
+      amount: "0-2"
+      chance: 35
+    - material: SUGAR
+      amount: "0-2"
+      chance: 35
+    - material: GUNPOWDER
+      amount: "0-2"
+      chance: 35
+    - material: SPIDER_EYE
+      amount: "0-2"
+      chance: 35
+    - material: GLASS_BOTTLE
+      amount: "0-2"
+      chance: 35
+    - material: STICK
+      amount: "0-2"
+      chance: 35
+  WITHER:
+    - material: NETHER_STAR
+      amount: 1
+  WITHER_SKELETON:
+    - material: BONE
+      amount: "0-2"
+    - material: COAL
+      amount: "0-1"
+      chance: 33
+    - material: WITHER_SKELETON_SKULL
+      amount: 1
+      chance: 2.5
+  WOLF: []
+  ZOGLIN:
+    - material: ROTTEN_FLESH
+      amount: "1-3"
+  ZOMBIE:
+    - material: ROTTEN_FLESH
+      amount: "0-2"
+    - material: IRON_INGOT
+      amount: 1
+      chance: 2.5
+    - material: CARROT
+      amount: 1
+      chance: 2.5
+    - material: POTATO
+      amount: 1
+      chance: 2.5
+  ZOMBIE_HORSE:
+    - material: ROTTEN_FLESH
+      amount: "0-2"
+  ZOMBIE_VILLAGER:
+    - material: ROTTEN_FLESH
+      amount: "0-2"
+    - material: IRON_INGOT
+      amount: 1
+      chance: 2.5
+    - material: CARROT
+      amount: 1
+      chance: 2.5
+    - material: POTATO
+      amount: 1
+      chance: 2.5
+  ZOMBIFIED_PIGLIN:
+    - material: ROTTEN_FLESH
+      amount: "0-1"
+    - material: GOLD_NUGGET
+      amount: "0-1"
