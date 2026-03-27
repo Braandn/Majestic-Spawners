@@ -1,7 +1,7 @@
 ![Minecraft](https://img.shields.io/badge/Minecraft-1.21.11-brightgreen)
 ![Java](https://img.shields.io/badge/Java-21-orange)
 ![Releases](https://img.shields.io/github/v/release/Braandn/Majestic-Spawners)
-![License](https://img.shields.io/github/license/Braandn/Majestic-Spawners)
+![License](https://shields.io/github/license/Braandn/Majestic-Spawners)
 
 # Majestic-Spawners
 
