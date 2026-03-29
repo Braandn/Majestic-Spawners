@@ -1,7 +1,34 @@
 package de.braandn;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ThreadLocalRandom;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.loot.LootContext;
+import org.bukkit.loot.LootTable;
+import org.bukkit.loot.LootTables;
+import org.bukkit.plugin.java.JavaPlugin;
+
 import de.braandn.commands.MajesticSpawnersCommand;
 import de.braandn.events.ChunksLoading;
+import de.braandn.events.PlayerJoin;
 import de.braandn.events.SpawnerBreak;
 import de.braandn.events.SpawnerGUI;
 import de.braandn.events.SpawnerInteract;
@@ -16,35 +43,13 @@ import de.braandn.utils.ChunkKey;
 import de.braandn.utils.GUISession;
 import de.braandn.utils.SpawnerData;
 import de.braandn.utils.SpawnerTypes;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ThreadLocalRandom;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.loot.LootContext;
-import org.bukkit.loot.LootTable;
-import org.bukkit.loot.LootTables;
-import org.bukkit.plugin.java.JavaPlugin;
+import de.braandn.utils.VersionChecker;
 
 public class SpawnersPlugin extends JavaPlugin {
 
   private static SpawnersPlugin instance;
-
+  private VersionChecker versionChecker;
+  
   public static NamespacedKey SPAWNER_TYPE_KEY;
   public static NamespacedKey SPAWNER_AMOUNT_KEY;
   public static NamespacedKey PLACED_CUSTOM_KEY;
@@ -110,6 +115,7 @@ public class SpawnersPlugin extends JavaPlugin {
       return;
     }
 
+    Bukkit.getPluginManager().registerEvents(new PlayerJoin(), this);
     Bukkit.getPluginManager().registerEvents(new ChunksLoading(), this);
     Bukkit.getPluginManager().registerEvents(new SpawnerBreak(), this);
     Bukkit.getPluginManager().registerEvents(new SpawnerPlace(), this);
@@ -128,6 +134,9 @@ public class SpawnersPlugin extends JavaPlugin {
     activateSpawnersInLoadedChunks();
     scheduleProcessingTask();
     scheduleSaveTask();
+
+    versionChecker = new VersionChecker(this);
+    versionChecker.start();
   }
 
   @Override
@@ -977,5 +986,9 @@ public class SpawnersPlugin extends JavaPlugin {
       }
       return min + random.nextInt(max - min + 1);
     }
+  }
+
+  public VersionChecker getVersionChecker() {
+    return versionChecker;
   }
 }
