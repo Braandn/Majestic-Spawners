@@ -51,7 +51,7 @@ public class SpawnerItem {
       meta.setLore(lore);
     }
 
-    meta.addItemFlags(ItemFlag.HIDE_ITEM_SPECIFICS, ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
+    meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 
     meta.getPersistentDataContainer()
         .set(SpawnersPlugin.SPAWNER_TYPE_KEY, PersistentDataType.STRING, normalizedType);

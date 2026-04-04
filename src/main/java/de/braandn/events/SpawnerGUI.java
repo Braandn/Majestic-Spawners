@@ -833,7 +833,7 @@ public class SpawnerGUI implements Listener {
     if (!lore.isEmpty()) {
       meta.setLore(lore.stream().map(SpawnerItem::color).collect(Collectors.toList()));
     }
-    meta.addItemFlags(ItemFlag.HIDE_ITEM_SPECIFICS, ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
+    meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
     item.setItemMeta(meta);
     return item;
   }
