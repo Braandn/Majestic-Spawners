@@ -3,12 +3,55 @@ on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag to rebuild and republish (for example v1.0.2)
+        required: true
+        type: string
 
 permissions:
   contents: write
 
 jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      tag_name: ${{ steps.resolve.outputs.tag_name }}
+      release_version: ${{ steps.resolve.outputs.release_version }}
+      checkout_ref: ${{ steps.resolve.outputs.checkout_ref }}
+    steps:
+    - name: Resolve release target
+      id: resolve
+      shell: bash
+      run: |
+        if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+          tag_name="${{ inputs.tag }}"
+        else
+          tag_name="${GITHUB_REF_NAME}"
+        fi
+
+        if [[ -z "$tag_name" ]]; then
+          echo "No release tag was provided."
+          exit 1
+        fi
+
+        if [[ ! "$tag_name" =~ ^v.+$ ]]; then
+          echo "Release tag must start with 'v', got: $tag_name"
+          exit 1
+        fi
+
+        echo "tag_name=$tag_name" >> "$GITHUB_OUTPUT"
+        echo "release_version=${tag_name#v}" >> "$GITHUB_OUTPUT"
+
+        if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+          echo "checkout_ref=${GITHUB_SHA}" >> "$GITHUB_OUTPUT"
+        else
+          echo "checkout_ref=refs/tags/$tag_name" >> "$GITHUB_OUTPUT"
+        fi
+
   build:
+    needs: prepare
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -16,10 +59,15 @@ jobs:
           - paper_version: '1.21.11-R0.1-SNAPSHOT'
             mc_version: '1.21.11'
             java_version: '21'
+          - paper_version: '26.1.1.build.14-alpha'
+            mc_version: '26.1.1'
+            java_version: '25'
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+      with:
+        ref: ${{ needs.prepare.outputs.checkout_ref }}
 
     - name: Set up JDK ${{ matrix.java_version }}
       uses: actions/setup-java@v4
@@ -34,27 +82,64 @@ jobs:
         -Dpaper.version=${{ matrix.paper_version }}
         -Dmc.version=${{ matrix.mc_version }}
         -Djava.version=${{ matrix.java_version }}
-        -Drevision=${GITHUB_REF_NAME#v}
+        -Drevision=${{ needs.prepare.outputs.release_version }}
+
+    - name: Normalize release artifact name
+      id: artifact
+      shell: bash
+      run: |
+        mkdir -p target/release
+        built_jar="$(find target -maxdepth 1 -type f -name 'MajesticSpawners*.jar' ! -name 'original-*' | head -n 1)"
+
+        if [[ -z "$built_jar" ]]; then
+          echo "No built JAR was found in target/."
+          exit 1
+        fi
+
+        built_name="$(basename "$built_jar")"
+
+        if [[ "$built_name" == *"-${{ matrix.mc_version }}.jar" ]]; then
+          release_name="$built_name"
+        else
+          release_name="${built_name%.jar}-jdk${{ matrix.java_version }}.jar"
+        fi
+
+        cp "$built_jar" "target/release/$release_name"
+        echo "release_name=$release_name" >> "$GITHUB_OUTPUT"
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
       with:
         name: jar-${{ matrix.paper_version }}
-        path: target/MajesticSpawners.jar
+        path: target/release/${{ steps.artifact.outputs.release_name }}
         if-no-files-found: error
 
   release:
-    needs: build
+    needs:
+      - prepare
+      - build
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+      with:
+        ref: ${{ needs.prepare.outputs.checkout_ref }}
 
     - name: Extract changelog for this version
       id: changelog
+      shell: bash
       run: |
-        # Extract everything between the first ## [x.y.z] header and the next one
-        awk '/^## \[/{if(found) exit; found=1; next} found' CHANGELOG.md > release_notes.md
+        version="${{ needs.prepare.outputs.release_version }}"
+        awk -v version="$version" '
+          $0 ~ "^## \\[" version "\\]" {found=1; next}
+          /^## \[/ && found {exit}
+          found {print}
+        ' CHANGELOG.md > release_notes.md
+
+        if [[ ! -s release_notes.md ]]; then
+          printf 'Rebuilt release artifacts for %s.\n' "${{ needs.prepare.outputs.tag_name }}" > release_notes.md
+        fi
+
         cat release_notes.md
 
     - name: Download all build artifacts
@@ -67,5 +152,7 @@ jobs:
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v2
       with:
+        tag_name: ${{ needs.prepare.outputs.tag_name }}
+        overwrite_files: true
         files: downloaded-jars/*.jar
         body_path: release_notes.md

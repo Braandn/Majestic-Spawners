@@ -1,5 +1,5 @@
-![Minecraft](https://img.shields.io/badge/Minecraft-1.21.11-brightgreen)
-![Java](https://img.shields.io/badge/Java-21-orange)
+![Minecraft](https://img.shields.io/badge/Minecraft-1.21.11%20%2F%2026.1.1-brightgreen)
+![Java](https://img.shields.io/badge/Java-21%20%2F%2025-orange)
 ![Releases](https://img.shields.io/github/v/release/Braandn/Majestic-Spawners)
 ![License](https://shields.io/github/license/Braandn/Majestic-Spawners)
 
@@ -74,8 +74,8 @@ For installation, configuration, commands, balancing, and admin workflow, use th
 
 ## Compatibility
 
-- Paper `1.21+`
-- Java `21`
+- Minecraft `1.21.11` with Paper `1.21.11-R0.1-SNAPSHOT` and Java `21`
+- Minecraft `26.1.1` with Paper `26.1.1.build.14-alpha` and Java `25`
 
 ## License
 

@@ -6,16 +6,19 @@
 
     <groupId>de.braandn</groupId>
     <artifactId>MajesticSpawners</artifactId>
-    <version>1.0.1</version>
+    <version>${revision}</version>
     <packaging>jar</packaging>
 
     <name>MajesticSpawners</name>
     <description>Spawners plugin.</description>
 
     <properties>
+        <revision>1.0.2</revision>
+        <mc.version>1.21.11</mc.version>
         <java.version>21</java.version>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <paper.version>1.21.11-R0.1-SNAPSHOT</paper.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -31,7 +34,7 @@
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.21.1-R0.1-SNAPSHOT</version>
+            <version>${paper.version}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -43,15 +46,21 @@
     </dependencies>
 
     <build>
-        <finalName>MajesticSpawners</finalName>
+        <finalName>${project.artifactId}-${mc.version}</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.13.0</version>
                 <configuration>
-                    <source>21</source>
-                    <target>21</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>

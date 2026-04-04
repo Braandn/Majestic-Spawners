@@ -1,6 +1,6 @@
 name: MajesticSpawners
 main: de.braandn.SpawnersPlugin
-version: '1.0.1'
+version: '${project.version}'
 authors: [braandn]
 api-version: "1.21"
 commands:
