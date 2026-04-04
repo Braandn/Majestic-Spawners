@@ -14,6 +14,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
+import de.braandn.utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -39,11 +40,6 @@ import de.braandn.services.SpawnerRecipeService;
 import de.braandn.storage.DatabaseStorage;
 import de.braandn.storage.SpawnerPersistenceService;
 import de.braandn.storage.SpawnerRecord;
-import de.braandn.utils.ChunkKey;
-import de.braandn.utils.GUISession;
-import de.braandn.utils.SpawnerData;
-import de.braandn.utils.SpawnerTypes;
-import de.braandn.utils.VersionChecker;
 
 public class SpawnersPlugin extends JavaPlugin {
 
@@ -137,6 +133,8 @@ public class SpawnersPlugin extends JavaPlugin {
 
     versionChecker = new VersionChecker(this);
     versionChecker.start();
+
+    Metrics metrics = new Metrics(this, 30568);
   }
 
   @Override
