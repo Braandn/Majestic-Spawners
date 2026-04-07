@@ -1,3 +1,4 @@
+![Servers](https://img.shields.io/bstats/servers/30568)
 ![Minecraft](https://img.shields.io/badge/Minecraft-1.21.11%20%2F%2026.1.1-brightgreen)
 ![Java](https://img.shields.io/badge/Java-21%20%2F%2025-orange)
 ![Releases](https://img.shields.io/github/v/release/Braandn/Majestic-Spawners)
